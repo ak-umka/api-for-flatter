@@ -35,5 +35,5 @@ class News(models.Model):
     title = models.CharField(max_length=100)
     text = models.TextField()
     author = models.CharField(max_length=40)
-    # image = models.ImageField(null=True, blank=True)
+    image = models.ImageField(null=True, blank=True)
     publication_date = models.DateField(null=True)
