@@ -1,5 +1,12 @@
 from django.db import models
 from datetime import datetime, date
+from django.conf import settings
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from rest_framework.authtoken.models import Token
+
+
+
 
 
 class Car(models.Model):
@@ -12,10 +19,11 @@ class Car(models.Model):
 class Fighter(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
-    date_of_birth= models.DateTimeField(null=True)
+    date_of_birth= models.DateTimeField()
     age = models.PositiveSmallIntegerField(default=0)
-    weight = models.FloatField(null=True)
-    growth = models.FloatField(null=True)
+    weight = models.FloatField()
+    growth = models.FloatField()
+
 
 class Federation(models.Model):
     options = (
@@ -28,6 +36,7 @@ class Federation(models.Model):
     Federation = models.CharField(max_length=20, choices=options)
     directions = models.CharField(max_length=50, default='SOME STRING')
 
+
 class Tag(models.Model):
     name = models.CharField(max_length=100, unique=True)
 
@@ -37,3 +46,4 @@ class News(models.Model):
     author = models.CharField(max_length=40)
     image = models.ImageField(null=True, blank=True)
     publication_date = models.DateField(null=True)
+    owner = models.ForeignKey('auth.User', related_name='news', on_delete=models.CASCADE)
